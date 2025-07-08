@@ -27,13 +27,8 @@ def handler(job):
     job_input = job['input']
     prompt = job_input['prompt']
 
-    neg_prompt = "(octane render, render, drawing, anime," \
-    "bad photo, bad photography:1.3), (worst quality," \
-    "low quality, blurry:1.2), (bad teeth, deformed teeth," \
-    "deformed lips), (bad anatomy, bad proportions:1.1)," \
-    "(deformed iris, deformed pupils), (deformed eyes, bad eyes)," \
-    "(deformed face, ugly face, bad face), (deformed hands, bad hands," \
-    "fused fingers), morbid, mutilated, mutation, disfigured"
+    neg_prompt = "bad hands, bad anatomy, ugly, deformed," \
+    "(face asymmetry, eyes asymmetry, deformed eyes, deformed mouth, open mouth)"
 
     time_start = time.time()
     image = pipe(
