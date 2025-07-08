@@ -11,7 +11,12 @@ import time
 # You will want models to be loaded into memory before starting serverless.
 
 try:
-    pipe = AutoPipelineForText2Image.from_pretrained("./model.safetensors", torch_dtype=torch.float16, variant="fp16")
+    pipe = AutoPipelineForText2Image.from_pretrained(
+        "SG161222/RealVisXL_V5.0_Lightning",
+        torch_dtype=torch.float16,
+        variant="fp16",
+        add_watermarker=False,
+        use_safetensors=True)
     pipe.to("cuda")
 except RuntimeError:
     quit()
@@ -21,8 +26,20 @@ def handler(job):
     job_input = job['input']
     prompt = job_input['prompt']
 
+    neg_prompt = "(octane render, render, drawing, anime," \
+    "bad photo, bad photography:1.3), (worst quality," \
+    "low quality, blurry:1.2), (bad teeth, deformed teeth," \
+    "deformed lips), (bad anatomy, bad proportions:1.1)," \
+    "(deformed iris, deformed pupils), (deformed eyes, bad eyes)," \
+    "(deformed face, ugly face, bad face), (deformed hands, bad hands," \
+    "fused fingers), morbid, mutilated, mutation, disfigured"
+
     time_start = time.time()
-    image = pipe(prompt=prompt, num_inference_steps=1, guidance_scale=0.0).images[0]
+    image = pipe(
+        prompt=prompt,
+        negative_prompt=neg_prompt,
+        num_inference_steps=5,
+        guidance_scale=1.0).images[0]
     print(f"Time taken: {time.time() - time_start}")
 
     buffer = io.BytesIO()
