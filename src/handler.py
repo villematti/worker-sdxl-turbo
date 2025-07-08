@@ -12,9 +12,9 @@ import time
 
 try:
     pipe = AutoPipelineForText2Image.from_pretrained(
-        "SG161222/RealVisXL_V5.0_Lightning",
+        "SG161222/RealVisXL_V5.0",
         torch_dtype=torch.float16,
-        variant="fp32",
+        variant="fp16",
         add_watermarker=False,
         use_safetensors=True)
     pipe.scheduler = DPMSolverSDEScheduler.from_config(pipe.scheduler.config)
@@ -39,7 +39,7 @@ def handler(job):
     image = pipe(
         prompt=prompt,
         negative_prompt=neg_prompt,
-        num_inference_steps=5,
+        num_inference_steps=35,
         guidance_scale=1.0).images[0]
     print(f"Time taken: {time.time() - time_start}")
 
