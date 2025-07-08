@@ -22,7 +22,7 @@ RUN python3.11 -m pip install --upgrade pip && \
 # NOTE: The base image comes with multiple Python versions pre-installed.
 #       It is reccommended to specify the version of Python when running your code.
 RUN wget https://huggingface.co/SG161222/RealVisXL_V5.0_Lightning/resolve/main/RealVisXL_V5.0_Lightning_fp16.safetensors
-RUN RUN RealVisXL_V5.0_Lightning_fp16.safetensors .
+RUN mv RealVisXL_V5.0_Lightning_fp16.safetensors .
 
 # Add src files (Worker Template)
 ADD src .
