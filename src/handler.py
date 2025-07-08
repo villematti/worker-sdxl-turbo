@@ -34,7 +34,7 @@ def handler(job):
     image = pipe(
         prompt=prompt,
         negative_prompt=neg_prompt,
-        num_inference_steps=35,
+        num_inference_steps=50,
         guidance_scale=1.0).images[0]
     print(f"Time taken: {time.time() - time_start}")
 
