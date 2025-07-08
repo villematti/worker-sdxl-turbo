@@ -1,7 +1,7 @@
 """ Example handler file. """
 
 import runpod
-from diffusers import AutoPipelineForText2Image, DPMSDEKarrasScheduler
+from diffusers import AutoPipelineForText2Image, DPMSolverSDEScheduler
 import torch
 import base64
 import io
@@ -17,7 +17,7 @@ try:
         variant="fp16",
         add_watermarker=False,
         use_safetensors=True)
-    pipe.scheduler = DPMSDEKarrasScheduler.from_config(pipe.scheduler.config)
+    pipe.scheduler = DPMSolverSDEScheduler.from_config(pipe.scheduler.config)
     pipe.to("cuda")
 except RuntimeError:
     quit()
